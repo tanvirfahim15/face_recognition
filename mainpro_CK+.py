@@ -20,6 +20,7 @@ import torchvision.models as models
 
 parser = argparse.ArgumentParser(description='PyTorch CK+ CNN Training')
 parser.add_argument('--model', type=str, default='VGG19', help='CNN architecture')
+parser.add_argument('--ls', type=str, default='CE', help='loss function')
 parser.add_argument('--dataset', type=str, default='CK+', help='dataset')
 parser.add_argument('--fold', default=1, type=int, help='k fold number')
 parser.add_argument('--bs', default=128, type=int, help='batch_size')
@@ -64,8 +65,6 @@ if opt.model == 'VGG19':
     net = VGG('VGG19')
 elif opt.model == 'Resnet18':
     net = ResNet18()
-elif opt.model == 'Resnet50':
-    net = alexnet()
 
 print('==> Building model..')
 
@@ -74,7 +73,14 @@ if torch.cuda.is_available():
     use_cuda = True
     net.cuda()
 
-criterion = nn.CrossEntropyLoss()
+    
+criterion = None
+if opt.ls == 'CE':
+    criterion = nn.CrossEntropyLoss()
+elif opt.model == 'Resnet18':
+    criterion = nn.BCEWithLogitsLoss()
+    
+
 optimizer = optim.SGD(net.parameters(), lr=opt.lr, momentum=0.9, weight_decay=5e-4)
 
 # Training

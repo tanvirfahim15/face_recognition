@@ -69,7 +69,9 @@ elif opt.model == 'Resnet50':
 
 print('==> Building model..')
 
+use_cuda = False
 if torch.cuda.is_available():
+    use_cuda = True
     net.cuda()
 
 criterion = nn.CrossEntropyLoss()

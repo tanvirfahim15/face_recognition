@@ -23,7 +23,6 @@ parser.add_argument('--dataset', type=str, default='CK+', help='dataset')
 parser.add_argument('--fold', default=1, type=int, help='k fold number')
 parser.add_argument('--bs', default=128, type=int, help='batch_size')
 parser.add_argument('--lr', default=0.01, type=float, help='learning rate')
-parser.add_argument('--resume', '-r', action='store_true', help='resume from checkpoint')
 opt = parser.parse_args()
 
 use_cuda = torch.cuda.is_available()
@@ -64,19 +63,10 @@ if opt.model == 'VGG19':
     net = VGG('VGG19')
 elif opt.model == 'Resnet18':
     net = ResNet18()
+elif opt.model == 'Resnet50':
+    net = resnet50(pretrained=True)
 
-if opt.resume:
-    # Load checkpoint.
-    print('==> Resuming from checkpoint..')
-    assert os.path.isdir(path), 'Error: no checkpoint directory found!'
-    checkpoint = torch.load(os.path.join(path,'Test_model.t7'))
-    
-    net.load_state_dict(checkpoint['net'])
-    best_Test_acc = checkpoint['best_Test_acc']
-    best_Test_acc_epoch = checkpoint['best_Test_acc_epoch']
-    start_epoch = best_Test_acc_epoch + 1
-else:
-    print('==> Building model..')
+print('==> Building model..')
 
 if use_cuda:
     net.cuda()

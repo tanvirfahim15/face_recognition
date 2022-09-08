@@ -65,7 +65,7 @@ if opt.model == 'VGG19':
 elif opt.model == 'Resnet18':
     net = ResNet18()
 elif opt.model == 'Resnet50':
-    net = models.inception_v3()
+    net = models.alexnet()
 
 print('==> Building model..')
 

@@ -16,7 +16,7 @@ import utils
 from CK import CK
 from torch.autograd import Variable
 from models import *
-import torchvision.models as models
+
 
 parser = argparse.ArgumentParser(description='PyTorch CK+ CNN Training')
 parser.add_argument('--model', type=str, default='VGG19', help='CNN architecture')
@@ -65,8 +65,14 @@ if opt.model == 'VGG19':
     net = VGG('VGG19')
 elif opt.model == 'Resnet18':
     net = ResNet18()
+elif opt.model == 'Resnet34':
+    net = PreActResNet34()
 elif opt.model == 'Resnet50':
     net = PreActResNet50()
+elif opt.model == 'Resnet101':
+    net = PreActResNet101()
+elif opt.model == 'Resnet152':
+    net = PreActResNet152()
 
 print('==> Building model..')
 

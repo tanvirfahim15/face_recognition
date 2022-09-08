@@ -64,7 +64,7 @@ if opt.model == 'VGG19':
 elif opt.model == 'Resnet18':
     net = ResNet18()
 elif opt.model == 'Resnet50':
-    net = resnet50(pretrained=True)
+    net = models.resnet50(pretrained=True)
 
 print('==> Building model..')
 

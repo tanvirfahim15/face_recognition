@@ -77,7 +77,7 @@ if torch.cuda.is_available():
 criterion = None
 if opt.ls == 'CE':
     criterion = nn.CrossEntropyLoss()
-elif opt.model == 'Resnet18':
+else:
     criterion = nn.NLLLoss()
     
 

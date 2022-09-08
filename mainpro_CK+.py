@@ -78,7 +78,7 @@ criterion = None
 if opt.ls == 'CE':
     criterion = nn.CrossEntropyLoss()
 elif opt.model == 'Resnet18':
-    criterion = nn.BCEWithLogitsLoss()
+    criterion = nn.NLLLoss()
     
 
 optimizer = optim.SGD(net.parameters(), lr=opt.lr, momentum=0.9, weight_decay=5e-4)

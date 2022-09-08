@@ -26,7 +26,7 @@ parser.add_argument('--bs', default=128, type=int, help='batch_size')
 parser.add_argument('--lr', default=0.01, type=float, help='learning rate')
 opt = parser.parse_args()
 
-use_cuda = torch.cuda.is_available()
+
 
 best_Test_acc = 0  # best PrivateTest accuracy
 best_Test_acc_epoch = 0
@@ -69,7 +69,7 @@ elif opt.model == 'Resnet50':
 
 print('==> Building model..')
 
-if use_cuda:
+if torch.cuda.is_available():
     net.cuda()
 
 criterion = nn.CrossEntropyLoss()

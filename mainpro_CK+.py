@@ -16,7 +16,7 @@ import utils
 from CK import CK
 from torch.autograd import Variable
 from models import *
-
+from sklearn.metrics import confusion_matrix
 
 parser = argparse.ArgumentParser(description='PyTorch CK+ CNN Training')
 parser.add_argument('--model', type=str, default='VGG19', help='CNN architecture')
@@ -135,6 +135,8 @@ def test(epoch):
     global Test_acc
     global best_Test_acc
     global best_Test_acc_epoch
+    true_label = []
+    predicted_label = []
     net.eval()
     PrivateTest_loss = 0
     correct = 0
@@ -154,15 +156,18 @@ def test(epoch):
         _, predicted = torch.max(outputs_avg.data, 1)
         total += targets.size(0)
         correct += predicted.eq(targets.data).cpu().sum()
-        for i in predicted.cpu():
-            print(i)
-        print(targets.data.cpu().tolist())
+        for i in predicted.cpu().tolist():
+            predicted_label.append(i)
+        for i in targets.data.cpu().tolist():
+            true_label.append(i)
 
         utils.progress_bar(batch_idx, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
             % (PrivateTest_loss / (batch_idx + 1), 100. * correct / total, correct, total))
     # Save checkpoint.
     Test_acc = 100.*correct/total
-
+    
+    confusion_matrix(true_label,predicted_label)
+    print(confusion_matrix(true_label,predicted_label))
     if Test_acc > best_Test_acc:
         print('Saving..')
         print("best_Test_acc: %0.3f" % Test_acc)

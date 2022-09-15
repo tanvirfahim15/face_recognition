@@ -156,7 +156,7 @@ def test(epoch):
         correct += predicted.eq(targets.data).cpu().sum()
         for i in predicted.cpu():
             print(i)
-        print(targets.data.cpu())
+        print(targets.data.cpu().tolist())
 
         utils.progress_bar(batch_idx, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
             % (PrivateTest_loss / (batch_idx + 1), 100. * correct / total, correct, total))

@@ -154,6 +154,7 @@ def test(epoch):
         _, predicted = torch.max(outputs_avg.data, 1)
         total += targets.size(0)
         correct += predicted.eq(targets.data).cpu().sum()
+        print(predicted.cpu())
 
         utils.progress_bar(batch_idx, len(testloader), 'Loss: %.3f | Acc: %.3f%% (%d/%d)'
             % (PrivateTest_loss / (batch_idx + 1), 100. * correct / total, correct, total))
